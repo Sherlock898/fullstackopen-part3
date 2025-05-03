@@ -41,10 +41,15 @@ const App = () => {
         personService
           .update(existingPerson.id, {...existingPerson, number: newNumber})
           .then(updatedPerson => {
-            setPersons(persons.filter(person => person.id != existingPerson.id.concat(updatedPerson)));
+            setPersons(persons.filter(person => person.id != existingPerson.id).concat(updatedPerson));
             sendNotification(`Updated ${updatedPerson.name} number`, "note");
           })
-          .catch(() => sendNotification("Error updating person", "error"));
+          .catch((error) => {
+            if(error.response && error.response.data){
+              sendNotification(error.response.data.error, "error");
+            }
+            else sendNotification("Error updating person ", "error");
+          });
       }
       setNewName('');
       setNewNumber('');
@@ -59,7 +64,12 @@ const App = () => {
         setNewNumber('');
         sendNotification(`Added ${newPerson.name}`, "note");
       })
-      .catch(() => sendNotification("Error creating new person", "error"));
+      .catch((error) => {
+        if(error.response && error.response.data){
+          sendNotification(error.response.data.error, "error");
+        }
+        else sendNotification("Error creating new person ", "error");
+      });
   }
 
   const handleDelete = (personToDelete) => {
