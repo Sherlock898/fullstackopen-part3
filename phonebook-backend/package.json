@@ -6,7 +6,7 @@
     "start": "node ./index.js",
     "dev": "node --watch ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -r dist && cd ../phonebook-frontned && npm run build && cp -r dist ../phonebook-backend",
+    "build:ui": "rm -r dist && cd ../phonebook-frontend && npm run build && cp -r dist ../phonebook-backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "author": "sherlock898",
